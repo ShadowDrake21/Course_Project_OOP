@@ -14,7 +14,7 @@ public abstract class AbstractWorker implements IfromTo, Runnable{
 	protected JLabel label;
 	protected JSlider minWorkTimeSlider;
 	protected QueueWithSlider queue;
-	protected Student trs;
+	protected Student std;
 	
 	public AbstractWorker(VisualPart gui, JLabel label, 
 			JSlider minWorkTimeSlider, QueueWithSlider 
