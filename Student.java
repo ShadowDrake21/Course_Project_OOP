@@ -31,25 +31,25 @@ public class Student implements Runnable{
 
 	@Override
 	public void run() {
-		try {// �������� ������� ����
+		try {
 			if (this.gui.queueDoor.getQueue().size() < maxQueueSize - 1) {
 				this.moveFromTo(this.doorEntry, this.gui.queueDoor).join();
 				Thread.sleep(this.gui.sliderDoor.getValue() * 1000);
 				
-				if (this.gui.queueComp1.getQueue().size() < maxQueueSize && Math.floor(Math.random() * 10 % 2) == 0) {
-					this.moveFromTo(this.gui.queueDoor, this.gui.queueComp1).join();
+				if (this.gui.queueComp1.getQueue().size() < maxQueueSize /*&& Math.floor(Math.random() * 10 % 2) == 0*/) {
+					this.moveFromTo(this.gui.queueDoor, this.gui.computer1).join();
 					Thread.sleep(this.gui.sliderComp.getValue() * 1000);
-					this.moveFromTo(this.gui.queueComp1, this.gui.counterQueueExit).join();} 
+					this.moveFromTo(this.gui.computer1, this.gui.counterQueueExit).join();} 
 				
-				if (this.gui.queueComp2.getQueue().size() < maxQueueSize && Math.floor(Math.random() * 10 % 2) == 0) {
-					this.moveFromTo(this.gui.queueDoor, this.gui.queueComp2).join();
+				if (this.gui.queueComp2.getQueue().size() < maxQueueSize /*&& Math.floor(Math.random() * 10 % 2) == 0*/) {
+					this.moveFromTo(this.gui.queueDoor, this.gui.computer2).join();
 					Thread.sleep(this.gui.sliderComp.getValue() * 1000);
-					this.moveFromTo(this.gui.queueComp2, this.gui.counterQueueExit).join();} 
+					this.moveFromTo(this.gui.computer2, this.gui.counterQueueExit).join();} 
 				
-				if (this.gui.queueComp3.getQueue().size() < maxQueueSize && Math.floor(Math.random() * 10 % 2) == 0) {
-					this.moveFromTo(this.gui.queueDoor, this.gui.queueComp3).join();
+				if (this.gui.queueComp3.getQueue().size() < maxQueueSize /*&& Math.floor(Math.random() * 10 % 2) == 0*/) {
+					this.moveFromTo(this.gui.queueDoor, this.gui.computer3).join();
 					Thread.sleep(this.gui.sliderComp.getValue() * 1000);
-					this.moveFromTo(this.gui.queueComp3, this.gui.counterQueueExit).join();} 
+					this.moveFromTo(this.gui.computer3, this.gui.counterQueueExit).join();} 
 				
 			} else {
 				this.moveFromTo(this.doorEntry, this.gui.counterQueueExit).join();
@@ -88,7 +88,7 @@ public class Student implements Runnable{
 						Student.this.label.setBounds(x, y, Student.this.label.getWidth(), Student.this.label.getHeight());
 						
 						try {
-							Thread.sleep(500);
+							Thread.sleep(800);
 						} catch(InterruptedException e) {
 							e.printStackTrace();
 						}
