@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 import transaction.Computer;
 import transaction.Counter;
 import transaction.Door;
+import transaction.LabelDoor;
 import transaction.QueueWithSlider;
 import transaction.Sound;
 
@@ -74,6 +75,7 @@ public class VisualPart {
 	public QueueWithSlider queueComp3;
 	
 	public Door entryDoor;
+	public LabelDoor labelDoor;
 	public Computer computer1;
 	public Computer computer2;
 	public Computer computer3;
@@ -208,7 +210,7 @@ public class VisualPart {
 		frmKrapyvTurev.getContentPane().add(labelComp3);
 		
 		sliderMusic = new JSlider();
-		sliderMusic.setValue(0);
+		sliderMusic.setValue(3);
 		sliderMusic.setToolTipText("MusicVolume");
 		sliderMusic.setPaintTicks(true);
 		sliderMusic.setPaintLabels(true);
@@ -280,6 +282,7 @@ public class VisualPart {
 				countExit = new QueueWithSlider(1, counterQueueExit,true);
 				
 				entryDoor = new Door(VisualPart.this, labelDoorEntry);
+				labelDoor = new LabelDoor(VisualPart.this, labelDoorQueue, queueDoor);
 				computer1 = new Computer(VisualPart.this, labelComp1, sliderComp, queueDoor, queueComp1);
 				computer2 = new Computer(VisualPart.this, labelComp2, sliderComp, queueDoor, queueComp2);
 				computer3 = new Computer(VisualPart.this, labelComp3, sliderComp, queueDoor, queueComp3);
