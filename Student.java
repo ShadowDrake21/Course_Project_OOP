@@ -26,7 +26,7 @@ public class Student implements Runnable{
 		this.label = new JLabel();
 		label.setBounds(this.doorEntry.getComponent().getX(), this.doorEntry.getComponent().getY(), 40, 40);
 		this.gui.frmKrapyvTurev.add(label);
-		this.picture = "/source/student.png";
+		this.picture = "/source/1.1.png";
 	}
 
 	@Override
@@ -34,25 +34,27 @@ public class Student implements Runnable{
 		try {
 			if (this.gui.queueDoor.getQueue().size() < maxQueueSize - 1) {
 				this.moveFromTo(this.doorEntry, this.gui.queueDoor).join();
-				Thread.sleep(this.gui.sliderDoor.getValue() * 1000);
-				
+				Thread.sleep(this.gui.sliderDoor.getValue() * 1000);			
+			} else {
 				if (this.gui.queueComp1.getQueue().size() < maxQueueSize /*&& Math.floor(Math.random() * 10 % 2) == 0*/) {
 					this.moveFromTo(this.gui.queueDoor, this.gui.computer1).join();
 					Thread.sleep(this.gui.sliderComp.getValue() * 1000);
-					this.moveFromTo(this.gui.computer1, this.gui.counterQueueExit).join();} 
-				
-				if (this.gui.queueComp2.getQueue().size() < maxQueueSize /*&& Math.floor(Math.random() * 10 % 2) == 0*/) {
-					this.moveFromTo(this.gui.queueDoor, this.gui.computer2).join();
-					Thread.sleep(this.gui.sliderComp.getValue() * 1000);
-					this.moveFromTo(this.gui.computer2, this.gui.counterQueueExit).join();} 
-				
-				if (this.gui.queueComp3.getQueue().size() < maxQueueSize /*&& Math.floor(Math.random() * 10 % 2) == 0*/) {
-					this.moveFromTo(this.gui.queueDoor, this.gui.computer3).join();
-					Thread.sleep(this.gui.sliderComp.getValue() * 1000);
-					this.moveFromTo(this.gui.computer3, this.gui.counterQueueExit).join();} 
-				
-			} else {
-				this.moveFromTo(this.doorEntry, this.gui.counterQueueExit).join();
+					this.moveFromTo(this.gui.computer1, this.gui.counterQueueExit).join();
+				} else {
+					if (this.gui.queueComp2.getQueue().size() < maxQueueSize /*&& Math.floor(Math.random() * 10 % 2) == 0*/) {
+						this.moveFromTo(this.gui.queueDoor, this.gui.computer2).join();
+						Thread.sleep(this.gui.sliderComp.getValue() * 1000);
+						this.moveFromTo(this.gui.computer2, this.gui.counterQueueExit).join();
+					} else {
+						if (this.gui.queueComp3.getQueue().size() < maxQueueSize /*&& Math.floor(Math.random() * 10 % 2) == 0*/) {
+							this.moveFromTo(this.gui.queueDoor, this.gui.computer3).join();
+							Thread.sleep(this.gui.sliderComp.getValue() * 1000);
+							this.moveFromTo(this.gui.computer3, this.gui.counterQueueExit).join();
+						} else {
+							this.moveFromTo(this.doorEntry, this.gui.counterQueueExit).join();
+						}
+					}
+				}
 			}
 		}		
 		catch(InterruptedException e) {
@@ -79,8 +81,11 @@ public class Student implements Runnable{
 				
 				// ���� �����������
 				for(int i = 0, x = xFrom, y = yFrom; i < n; ++i, x += dx, y += dy) {
-					URL u = this.getClass().getResource(picture);
-					//System.out.println("URL: " + u);
+					if(i%4==0)picture = "/source/1.1.png";
+					if(i%4==1)picture = "/source/1.2.png";
+					if(i%4==2)picture = "/source/1.3.png";
+					if(i%4==3)picture = "/source/1.4.png";
+					URL u = this.getClass().getResource(picture);				
 					try {
 						Image image = ImageIO.read(u);
 						image = image.getScaledInstance(Student.this.label.getWidth(), Student.this.label.getHeight(), Image.SCALE_SMOOTH);
@@ -88,11 +93,11 @@ public class Student implements Runnable{
 						Student.this.label.setBounds(x, y, Student.this.label.getWidth(), Student.this.label.getHeight());
 						
 						try {
-							Thread.sleep(800);
+							Thread.sleep(1000);
 						} catch(InterruptedException e) {
 							e.printStackTrace();
 						}
-						Student.this.label.setBounds(x, y, Student.this.label.getWidth(), Student.this.label.getHeight());
+						Student.this.label.setBounds(x+10, y+10, Student.this.label.getWidth(), Student.this.label.getHeight());
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
