@@ -26,33 +26,35 @@ public class Student implements Runnable{
 		this.label = new JLabel();
 		label.setBounds(this.doorEntry.getComponent().getX(), this.doorEntry.getComponent().getY(), 40, 40);
 		this.gui.frmKrapyvTurev.add(label);
-		this.picture = "/source/student.png";
+		this.picture = "/source/1.1.png";
 	}
 
 	@Override
 	public void run() {
 		try {
 			if (this.gui.queueDoor.getQueue().size() < maxQueueSize - 1) {
-				this.moveFromTo(this.doorEntry, this.gui.queueDoor).join();
-				Thread.sleep(this.gui.sliderDoor.getValue() * 1000);
-				
-				if (this.gui.queueComp1.getQueue().size() < maxQueueSize /*&& Math.floor(Math.random() * 10 % 2) == 0*/) {
-					this.moveFromTo(this.gui.queueDoor, this.gui.queueComp1).join();
-					Thread.sleep(this.gui.sliderComp.getValue() * 1000);
-					this.moveFromTo(this.gui.queueComp1, this.gui.counterQueueExit).join();} 
-				
-				if (this.gui.queueComp2.getQueue().size() < maxQueueSize /*&& Math.floor(Math.random() * 10 % 2) == 0*/) {
-					this.moveFromTo(this.gui.queueDoor, this.gui.queueComp2).join();
-					Thread.sleep(this.gui.sliderComp.getValue() * 1000);
-					this.moveFromTo(this.gui.queueComp2, this.gui.counterQueueExit).join();} 
-				
-				if (this.gui.queueComp3.getQueue().size() < maxQueueSize /*&& Math.floor(Math.random() * 10 % 2) == 0*/) {
-					this.moveFromTo(this.gui.queueDoor, this.gui.queueComp3).join();
-					Thread.sleep(this.gui.sliderComp.getValue() * 1000);
-					this.moveFromTo(this.gui.queueComp3, this.gui.counterQueueExit).join();} 
-				
+				this.moveFromTo(this.doorEntry, this.gui.labelDoor, false).join();
+				Thread.sleep(this.gui.sliderDoor.getValue() * 1000);			
 			} else {
-				this.moveFromTo(this.doorEntry, this.gui.counterQueueExit).join();
+				if (this.gui.queueComp1.getQueue().size() < maxQueueSize /*&& Math.floor(Math.random() * 10 % 2) == 0*/) {
+					this.moveFromTo(this.gui.labelDoor, this.gui.computer1, true).join();
+					Thread.sleep(this.gui.sliderComp.getValue() * 1000);
+					this.moveFromTo(this.gui.computer1, this.gui.labelExitDoor, false).join();
+				} else {
+					if (this.gui.queueComp2.getQueue().size() < maxQueueSize /*&& Math.floor(Math.random() * 10 % 2) == 0*/) {
+						this.moveFromTo(this.gui.labelDoor, this.gui.computer2, true).join();
+						Thread.sleep(this.gui.sliderComp.getValue() * 1000);
+						this.moveFromTo(this.gui.computer2, this.gui.labelExitDoor, false).join();
+					} else {
+						if (this.gui.queueComp3.getQueue().size() < maxQueueSize /*&& Math.floor(Math.random() * 10 % 2) == 0*/) {
+							this.moveFromTo(this.gui.labelDoor, this.gui.computer3, true).join();
+							Thread.sleep(this.gui.sliderComp.getValue() * 1000);
+							this.moveFromTo(this.gui.computer3, this.gui.labelExitDoor, false).join();
+						} else {
+							this.moveFromTo(this.doorEntry, this.gui.labelExitDoor, false).join();
+						}
+					}
+				}
 			}
 		}		
 		catch(InterruptedException e) {
@@ -60,13 +62,24 @@ public class Student implements Runnable{
 		}	
 	}
 	
-	public Thread moveFromTo(final IfromTo from, final IfromTo to) {
+	public Thread moveFromTo(final IfromTo from, final IfromTo to, boolean isDoor) {
 		Thread t = new Thread() {
 			public void run() {
-				int xFrom = from.getComponent().getX();
+				int xFrom;
+				if(isDoor) {
+					xFrom = from.getComponent().getX() + 30;
+				} else {
+					xFrom = from.getComponent().getX();
+				}
 				int xTo = to.getComponent().getX();
 				int lenX = xTo - xFrom;
-				int yFrom = from.getComponent().getY();
+				int yFrom;
+				if(isDoor) {
+					yFrom = from.getComponent().getY() - 60;
+				} else {
+					yFrom = from.getComponent().getY();
+				}
+				
 				int yTo = to.getComponent().getY();
 				int lenY = yTo - yFrom;
 				int len = (int) Math.round(Math.sqrt((double) (lenX * lenX + lenY * lenY)));
@@ -77,10 +90,12 @@ public class Student implements Runnable{
 				int dy = lenY / n;
 				from.onOut(Student.this);
 				
-				// ���� �����������
 				for(int i = 0, x = xFrom, y = yFrom; i < n; ++i, x += dx, y += dy) {
-					URL u = this.getClass().getResource(picture);
-					//System.out.println("URL: " + u);
+					if(i%4==0)picture = "/source/1.1.png";
+					if(i%4==1)picture = "/source/1.2.png";
+					if(i%4==2)picture = "/source/1.3.png";
+					if(i%4==3)picture = "/source/1.4.png";
+					URL u = this.getClass().getResource(picture);				
 					try {
 						Image image = ImageIO.read(u);
 						image = image.getScaledInstance(Student.this.label.getWidth(), Student.this.label.getHeight(), Image.SCALE_SMOOTH);
@@ -88,7 +103,7 @@ public class Student implements Runnable{
 						Student.this.label.setBounds(x, y, Student.this.label.getWidth(), Student.this.label.getHeight());
 						
 						try {
-							Thread.sleep(800);
+							Thread.sleep(1000);
 						} catch(InterruptedException e) {
 							e.printStackTrace();
 						}

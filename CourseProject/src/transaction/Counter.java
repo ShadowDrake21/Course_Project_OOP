@@ -19,6 +19,7 @@ public class Counter implements IfromTo{
 
 	@Override
 	public void onIn(Student st) {	
+		textField.setText(String.valueOf(++count));
 	}
 
 	@Override

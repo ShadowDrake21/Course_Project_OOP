@@ -1,8 +1,11 @@
 package transaction;
 
 import java.awt.Component;
+import java.awt.Image;
+import java.io.IOException;
 import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
@@ -41,9 +44,14 @@ public abstract class AbstractWorker implements IfromTo, Runnable{
 		
 	}
 	
-	protected void display(String pct) {
+	protected void display(String pct) throws IOException {
+//		URL u = getClass().getResource(pct);
+//		ImageIcon image = new ImageIcon(u);
+//		label.setIcon(image);
 		URL u = getClass().getResource(pct);
-		ImageIcon image = new ImageIcon(u);
-		label.setIcon(image);
+		// зчитуємо зображення в icon
+		Image image = ImageIO.read(u);
+		image = image.getScaledInstance(this.label.getWidth(), this.label.getHeight(), Image.SCALE_SMOOTH);
+		label.setIcon(new ImageIcon(image));
 	}
 }

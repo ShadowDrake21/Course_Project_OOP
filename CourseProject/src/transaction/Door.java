@@ -9,7 +9,6 @@ import view.VisualPart;
 
 public class Door implements IfromTo, Runnable{
 	private VisualPart gui;
-	private int speed = 3;
 	private Student student;
 	private Thread thread;
 	private JLabel label;

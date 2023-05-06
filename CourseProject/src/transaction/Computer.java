@@ -28,7 +28,7 @@ public class Computer extends AbstractWorker {
 				queue.notify();
 			}// конец блока synchronized (queue)
 			// Створює поток переміщення транзакції до себе
-			Thread t = std.moveFromTo(queue, this);
+			Thread t = std.moveFromTo(queue, this, true);
 			//Призупиняється на час переміщення транзакції
 			try {
 				t.join();
@@ -46,7 +46,7 @@ public class Computer extends AbstractWorker {
 			// Створює поток переміщення транзакції від себе до лічильник
 			queue1.removeFirst();
 
-			std.moveFromTo(this, this.gui.countExit);
+			std.moveFromTo(this, this.gui.labelExitDoor, false);
 		}
 	}
 

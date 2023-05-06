@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 import transaction.Computer;
 import transaction.Counter;
 import transaction.Door;
+import transaction.LabelDoor;
 import transaction.QueueWithSlider;
 import transaction.Sound;
 
@@ -68,11 +69,18 @@ public class VisualPart {
 	private JTextField textQueueComp3;
 
 	public QueueWithSlider queueDoor;
-	public QueueWithSlider countExit;
 	public QueueWithSlider queueComp1;
 	public QueueWithSlider queueComp2;
 	public QueueWithSlider queueComp3;
+	public QueueWithSlider countExit;
 	
+	public Door entryDoor;
+	public LabelDoor labelDoor;
+	public Computer computer1;
+	public Computer computer2;
+	public Computer computer3;
+	public LabelDoor labelExitDoor;
+
 	private Thread threadDoor;
 	private Thread threadComp1;
 	private Thread threadComp2;
@@ -159,7 +167,7 @@ public class VisualPart {
 		frmKrapyvTurev.getContentPane().add(labelDoorEntry);
 		
 		labelDoorQueue = new JLabel("");
-		labelDoorQueue.setBounds(239, 188, 90, 100);
+		labelDoorQueue.setBounds(241, 188, 90, 100);
 		try {
 			labelDoorQueue.setIcon(new ImageIcon(ImageIO.read(VisualPart.class.getResource("/source/closedoor.png"))
 					.getScaledInstance(labelDoorQueue.getWidth(), labelDoorQueue.getHeight(), Image.SCALE_SMOOTH)));
@@ -203,7 +211,7 @@ public class VisualPart {
 		frmKrapyvTurev.getContentPane().add(labelComp3);
 		
 		sliderMusic = new JSlider();
-		sliderMusic.setValue(0);
+		sliderMusic.setValue(3);
 		sliderMusic.setToolTipText("MusicVolume");
 		sliderMusic.setPaintTicks(true);
 		sliderMusic.setPaintLabels(true);
@@ -272,12 +280,14 @@ public class VisualPart {
 				queueComp1 = new QueueWithSlider(1, counterQueueComp1,false);
 				queueComp2 = new QueueWithSlider(1, counterQueueComp2,false);
 				queueComp3 = new QueueWithSlider(1, counterQueueComp3,false);
-				countExit = new QueueWithSlider(1, counterQueueExit,true);
+//				countExit = new QueueWithSlider(1, counterQueueExit,true);
 				
-				Door entryDoor = new Door(VisualPart.this, labelDoorEntry);
-				Computer computer1 = new Computer(VisualPart.this, labelComp1, sliderComp, queueDoor, queueComp1);
-				Computer computer2 = new Computer(VisualPart.this, labelComp2, sliderComp, queueDoor, queueComp2);
-				Computer computer3 = new Computer(VisualPart.this, labelComp3, sliderComp, queueDoor, queueComp3);
+				entryDoor = new Door(VisualPart.this, labelDoorEntry);
+				labelDoor = new LabelDoor(VisualPart.this, labelDoorQueue, counterQueue, queueDoor, null, null);
+				computer1 = new Computer(VisualPart.this, labelComp1, sliderComp, queueDoor, queueComp1);
+				computer2 = new Computer(VisualPart.this, labelComp2, sliderComp, queueDoor, queueComp2);
+				computer3 = new Computer(VisualPart.this, labelComp3, sliderComp, queueDoor, queueComp3);
+				labelExitDoor = new LabelDoor(VisualPart.this, labelDoorExit, counterQueueExit, queueComp1, queueComp2, queueComp3);
 				
 				threadDoor = new Thread(entryDoor);
 				threadComp1 = new Thread(computer1);
@@ -336,7 +346,7 @@ public class VisualPart {
 		lblQueue = new JLabel("Queue");
 		lblQueue.setHorizontalAlignment(SwingConstants.CENTER);
 		lblQueue.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblQueue.setBounds(249, 152, 80, 26);
+		lblQueue.setBounds(241, 152, 80, 26);
 		frmKrapyvTurev.getContentPane().add(lblQueue);
 		
 		textQueue = new JTextField();
@@ -345,7 +355,7 @@ public class VisualPart {
 		textQueue.setHorizontalAlignment(SwingConstants.CENTER);
 		textQueue.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		textQueue.setColumns(10);
-		textQueue.setBounds(273, 298, 40, 40);
+		textQueue.setBounds(269, 298, 40, 40);
 		frmKrapyvTurev.getContentPane().add(textQueue);
 		
 		textQueueComp2 = new JTextField();

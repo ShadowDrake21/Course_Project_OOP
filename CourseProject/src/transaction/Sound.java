@@ -45,7 +45,7 @@ public class Sound {
 	}
 
 	public void setVolume() {
-		volumeControl.setValue(volumeControl.getMinimum() - volume.getValue() * (-12));
+		volumeControl.setValue(volumeControl.getMinimum() - volume.getValue() * (-20));
 	}
 
 	public void loopMusic() {
