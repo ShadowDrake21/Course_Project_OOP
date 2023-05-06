@@ -283,11 +283,11 @@ public class VisualPart {
 //				countExit = new QueueWithSlider(1, counterQueueExit,true);
 				
 				entryDoor = new Door(VisualPart.this, labelDoorEntry);
-				labelDoor = new LabelDoor(VisualPart.this, labelDoorQueue, counterQueue, queueDoor, null, null);
+				labelDoor = new LabelDoor(VisualPart.this, labelDoorQueue, counterQueue, queueDoor, false);
 				computer1 = new Computer(VisualPart.this, labelComp1, sliderComp, queueDoor, queueComp1);
 				computer2 = new Computer(VisualPart.this, labelComp2, sliderComp, queueDoor, queueComp2);
 				computer3 = new Computer(VisualPart.this, labelComp3, sliderComp, queueDoor, queueComp3);
-				labelExitDoor = new LabelDoor(VisualPart.this, labelDoorExit, counterQueueExit, queueComp1, queueComp2, queueComp3);
+				labelExitDoor = new LabelDoor(VisualPart.this, labelDoorExit, counterQueueExit, null, true);
 				
 				threadDoor = new Thread(entryDoor);
 				threadComp1 = new Thread(computer1);
